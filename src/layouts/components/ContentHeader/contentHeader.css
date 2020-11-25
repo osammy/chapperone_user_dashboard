@@ -1,0 +1,38 @@
+.lch-container {
+    height: 70px;
+    width: 82%;
+    /* box-shadow: 0 0px 4px 0 rgba(0, 0, 0, 0.2); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    /* z-index: 1; */
+    margin-left: 255px;
+}
+
+.lch-content {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.lch-leftIconContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.lch-avatarImg {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.lch-headerEnd {
+    /* position: absolute;
+    right: 550px;
+    top: 170px; */
+
+    z-index: 444444;
+
+}

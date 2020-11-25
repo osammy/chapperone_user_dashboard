@@ -1,0 +1,108 @@
+.login-form {
+  
+    border:1px solid #eee;
+    padding: 100px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px 0px #ddd;
+    background: white;
+    width: 300px;
+    height: 300px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.login-logo{
+  width: 250px;
+  margin-bottom:8px;
+  border-radius: 4px;
+}
+
+.login-panel{
+  display: flex;
+  flex-direction: column;
+  padding:16px;
+  align-items: center;
+  height: auto;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.spinner{
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -25px;
+    margin-left: -25px;
+    width: 50px;
+    height: 50px;
+}
+
+.footer{
+  flex-grow: 1;
+}
+
+/* */
+
+.form {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  margin: -160px 0 0 -160px;
+  width: 320px;
+  height: 320px;
+  padding: 36px;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.08);
+}
+
+.form button {
+  width: 100%;
+}
+
+.form p {
+  color: rgb(204, 204, 204);
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  margin-right: 8px;
+}
+
+.logo span {
+  vertical-align: text-bottom;
+  font-size: 16px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.ant-spin-container,
+.ant-spin-nested-loading {
+  height: 100%;
+}
+
+.footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}

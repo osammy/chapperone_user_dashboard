@@ -1,0 +1,30 @@
+.side-menu-logo {
+    display: block;
+    margin: 0 auto;
+}
+
+.ant-menu-submenu.ant-menu-submenu-inline,
+.ant-menu-submenu.ant-menu-submenu-vertical{
+  padding: 0;}
+
+.dasboard-container {
+  width: 100%;
+  height: 100%;
+  border: 1px solid blue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dsh-content {
+  background-color: rgb(240, 242, 245);
+}
+
+.dsh-sidebarTop {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 4px solid green;
+  /* position: absolute;
+  z-index: 10000; */
+}

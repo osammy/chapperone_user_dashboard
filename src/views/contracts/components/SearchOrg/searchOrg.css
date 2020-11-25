@@ -1,0 +1,25 @@
+.crt-sch-container {
+    height: 100px;
+    width: 100%;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px 0 20px;
+    margin-bottom: var(--verticalMargin);
+}
+
+.crt-sch-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.crt-sch-btnContainer {
+    display: flex;
+    justify-Content: center;
+    flex-Direction: column;
+    height: 100%;    
+}
+
