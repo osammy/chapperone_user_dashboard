@@ -13,7 +13,7 @@ var indexRoutes = [
   { path: "/dashboard", name: "Dashboard", component: Dashboard, exact: false },
   { path: "/login", name: "Login", component: Login, exact: true },
   {
-    path: "/contract_registration/:orgId",
+    path: "/contract_registration/:contractId",
     name: "Contracts Registration",
     component: ContractRegistration,
     exact: false,

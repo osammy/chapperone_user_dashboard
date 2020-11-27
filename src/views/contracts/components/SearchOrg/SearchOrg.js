@@ -5,14 +5,16 @@ import "./searchOrg.css";
 
 const { Option } = Select;
 
-function SearchOrg() {
+function SearchOrg(props) {
   const [form] = Form.useForm();
-  const [searchBy, setSearchBy] = useState("Code");
-  const [loading, setLoading] = useState(false);
+  const {
+    handleSearch,
+    loading,
+    handleChange,
+    handleSearchInputChange,
+    searchBy,
+  } = props;
 
-  function handleChange(value) {
-    setSearchBy(value);
-  }
   return (
     <div className="crt-sch-container">
       <Form
@@ -21,12 +23,14 @@ function SearchOrg() {
         initialValues={{
           layout: "vertical",
         }}
+        // onFinish={handleSearch}
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <Form.Item label="Search By">
           <Select
-            defaultValue="Code"
+            // defaultValue="Code"
             style={{ width: 120 }}
+            value={searchBy}
             onChange={handleChange}
           >
             <Option value="Code">Code</Option>
@@ -34,11 +38,14 @@ function SearchOrg() {
           </Select>
         </Form.Item>
         <Form.Item label={searchBy}>
-          <Input placeholder={`Enter ${searchBy}`} />
+          <Input
+            onChange={handleSearchInputChange}
+            placeholder={`Enter ${searchBy}`}
+          />
         </Form.Item>
         <div className="crt-sch-btnContainer">
           <Form.Item label="  ">
-            <Button loading={loading} type="primary">
+            <Button onClick={handleSearch} loading={loading} type="primary">
               Submit
             </Button>
           </Form.Item>

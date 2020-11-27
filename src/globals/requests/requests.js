@@ -4,22 +4,15 @@ import axios from "axios";
 import { keys } from "../../constants";
 
 function getUserToken() {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .getItem(keys.TOKEN_KEY)
-      .then((token) => {
-        if (!token) {
-          reject(new Error("Credentials not found"));
-        } else {
-          resolve(token);
-        }
-      })
-      .catch(reject);
-  });
+  const token = localStorage.getItem(keys.TOKEN_KEY);
+
+  if (!token) {
+    new Error("Credentials not found");
+  }
 }
 
 const getWithAuth = async (url, params) => {
-  const token = await getUserToken();
+  const token = getUserToken();
   let options = {
     method: "GET",
     url,
@@ -37,7 +30,7 @@ const getWithAuth = async (url, params) => {
 };
 
 const postWithAuth = async (url, data) => {
-  const token = await getUserToken();
+  const token = getUserToken();
   let options = {
     method: "POST",
     url,
@@ -52,7 +45,7 @@ const postWithAuth = async (url, data) => {
 };
 
 const putWithAuth = async (url, data) => {
-  const token = await getUserToken();
+  const token = getUserToken();
 
   let options = {
     method: "PUT",

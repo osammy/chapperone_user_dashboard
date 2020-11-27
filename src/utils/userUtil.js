@@ -1,31 +1,19 @@
+/* eslint-disable import/no-anonymous-default-export */
 import jwt_decode from "jwt-decode";
 
 import { keys } from "../constants";
 
-export const getUserFromlocalStorage = () => {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .getItem(keys.TOKEN_KEY)
-      .then((token) => {
-        if (!token) {
-          throw new Error("Credential is not found");
-        }
-        const user = jwt_decode(token);
-        resolve(user);
-      })
-      .catch((e) => {
-        reject(e);
-      });
-  });
+export const getUserFromLocalStorage = () => {
+  const token = window.localStorage.getItem(keys.TOKEN_KEY);
+  if (!token) {
+    throw new Error("Credential is not found");
+  }
+  const user = jwt_decode(token);
+  return user;
 };
 
-export const setUserRegStatusInlocalStorage = async (status) => {
-  try {
-    await localStorage.setItem(keys.HAS_REGISTERED_KEY, status);
-  } catch (e) {
-    throw e;
-  }
-  return true;
+export const setUserRegStatusInLocalStorage = (status) => {
+  return window.localStorage.setItem(keys.HAS_REGISTERED_KEY, status);
 };
 
 export const generateRandomStrings = (n) => {
@@ -47,59 +35,22 @@ const validateEmail = (email) => {
 };
 
 const getUserToken = () => {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .getItem(keys.TOKEN_KEY)
-      .then((token) => {
-        if (!token) {
-          reject(new Error("Credentials not found"));
-        } else {
-          resolve(token);
-        }
-      })
-      .catch(reject);
-  });
+  return window.localStorage.getItem(keys.TOKEN_KEY);
 };
 
 const setUserToken = (token) => {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .setItem(keys.TOKEN_KEY, token)
-      .then(() => {
-        resolve(true);
-      })
-      .catch(reject);
-  });
+  window.localStorage.setItem(keys.TOKEN_KEY, token);
 };
 
 const removeUserToken = () => {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .removeItem(keys.TOKEN_KEY)
-      .then(() => {
-        resolve(true);
-      })
-      .catch(reject);
-  });
+  window.localStorage.removeItem(keys.TOKEN_KEY);
 };
 
-const removeUserRegisteration = () => {
-  return new Promise((resolve, reject) => {
-    localStorage
-      .removeItem(keys.HAS_REGISTERED_KEY)
-      .then(() => {
-        resolve(true);
-      })
-      .catch(reject);
-  });
-};
 export default {
-  getUserFromlocalStorage,
+  getUserFromLocalStorage,
   generateRandomStrings,
   validateEmail,
   getUserToken,
   setUserToken,
   removeUserToken,
-  removeUserRegisteration,
-  setUserRegStatusInlocalStorage,
 };

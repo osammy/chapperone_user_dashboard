@@ -1,0 +1,12 @@
+.ctf-container {
+    width: 100%;
+    background-color: var(--white);
+    padding: 20px;
+}
+
+.ctf-formItem {
+    /* width: 500px; */
+    display: flex;
+    justify-content: center;
+
+}

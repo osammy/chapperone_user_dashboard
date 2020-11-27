@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 function toInteger(dirtyNumber) {
   if (dirtyNumber === null || dirtyNumber === true || dirtyNumber === false) {
     return NaN;
@@ -18,20 +19,20 @@ function toDate(argument) {
   // Clone the date
   if (
     argument instanceof Date ||
-    (typeof argument === 'object' && argStr === '[object Date]')
+    (typeof argument === "object" && argStr === "[object Date]")
   ) {
     // Prevent the date to lose the milliseconds when passed to new Date() in IE10
     return new Date(argument.getTime());
-  } else if (typeof argument === 'number' || argStr === '[object Number]') {
+  } else if (typeof argument === "number" || argStr === "[object Number]") {
     return new Date(argument);
   } else {
     if (
-      (typeof argument === 'string' || argStr === '[object String]') &&
-      typeof console !== 'undefined'
+      (typeof argument === "string" || argStr === "[object String]") &&
+      typeof console !== "undefined"
     ) {
       // eslint-disable-next-line no-console
       console.warn(
-        "Starting with v2.0.0-beta.1 date-fns doesn't accept strings as arguments. Please use `parseISO` to parse strings. See: https://git.io/fjule",
+        "Starting with v2.0.0-beta.1 date-fns doesn't accept strings as arguments. Please use `parseISO` to parse strings. See: https://git.io/fjule"
       );
       // eslint-disable-next-line no-console
       console.warn(new Error().stack);
@@ -117,7 +118,7 @@ function addMonths(dirtyDate, dirtyAmount) {
     date.setFullYear(
       endOfDesiredMonth.getFullYear(),
       endOfDesiredMonth.getMonth(),
-      dayOfMonth,
+      dayOfMonth
     );
     return date;
   }
@@ -135,33 +136,33 @@ function subYears(dirtyDate, dirtyAmount) {
 //
 
 const months = [
-  'Jan',
-  'Feb',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
+  "Jan",
+  "Feb",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 function getDayFormat(day) {
   switch (day) {
     case 1:
-      var format = 'st';
+      var format = "st";
       break;
     case 2:
-      var format = 'nd';
+      var format = "nd";
       break;
     case 3:
-      var format = 'rd';
+      var format = "rd";
       break;
     default:
-      var format = 'th';
+      var format = "th";
   }
   return format;
 }
@@ -256,9 +257,9 @@ function differenceInCalendarYears(dirtyDateLeft, dirtyDateRight) {
 
 export const formatDate = (date, divider) => {
   if (!date) {
-    return '';
+    return "";
   }
-  if (typeof date === 'string' || typeof date === 'number') {
+  if (typeof date === "string" || typeof date === "number") {
     date = new Date(date);
   }
 
@@ -269,8 +270,8 @@ export const formatDate = (date, divider) => {
   const monthInString = months[month];
 
   if (divider) {
-    day = day >= 10 ? day : '0' + day;
-    month = month + 1 >= 10 ? month + 1 : '0' + (month + 1);
+    day = day >= 10 ? day : "0" + day;
+    month = month + 1 >= 10 ? month + 1 : "0" + (month + 1);
 
     return `${day}${divider}${month}${divider}${year}`;
   }
@@ -323,8 +324,8 @@ const differenceInYears = (dirtyDateLeft, dirtyDateRight) => {
 
   // Set both dates to a valid leap year for accurate comparison when dealing
   // with leap days
-  dateLeft.setFullYear('1584');
-  dateRight.setFullYear('1584');
+  dateLeft.setFullYear("1584");
+  dateRight.setFullYear("1584");
 
   // Math.abs(diff in full years - diff in calendar years) === 1 if last calendar year is not full
   // If so, result must be decreased by 1 in absolute value
@@ -334,7 +335,7 @@ const differenceInYears = (dirtyDateLeft, dirtyDateRight) => {
   return result === 0 ? 0 : result;
 };
 export const formatTime = (date) => {
-  if (typeof date === 'string' || typeof date === 'number') {
+  if (typeof date === "string" || typeof date === "number") {
     date = new Date(date);
   }
   let hrs = date.getHours();
@@ -351,7 +352,7 @@ export const formatTime = (date) => {
 };
 
 export const formatDateTime = (someDate) => {
-  if (typeof someDate === 'number' || typeof someDate === 'string') {
+  if (typeof someDate === "number" || typeof someDate === "string") {
     someDate = new Date(someDate);
   }
 
@@ -360,22 +361,22 @@ export const formatDateTime = (someDate) => {
   }
 
   if (isYesterday(someDate)) {
-    return 'Yesterday';
+    return "Yesterday";
   }
 
-  return formatDate(someDate, '/');
+  return formatDate(someDate, "/");
 };
 
 export const formatFullDateTime = (dateToFormat) => {
-  let day = '';
-  if (typeof dateToFormat === 'string') {
+  let day = "";
+  if (typeof dateToFormat === "string") {
     dateToFormat = new Date(dateToFormat);
   }
 
   if (isToday(dateToFormat)) {
-    day = 'Today';
+    day = "Today";
   } else if (isYesterday(dateToFormat)) {
-    day = 'Yesterday';
+    day = "Yesterday";
   } else {
     day = formatDate(dateToFormat);
   }
@@ -390,11 +391,11 @@ function decodeDateFromString(theDate, defaultType) {
   //   // This is true when `theDate` is already in the `mm/dd/yy` format as opposed to the 'dd/mm/yy' format
   //   return new Date(theDate);
   // }
-  let separator = '';
-  if (theDate.includes('/')) {
-    separator = '/';
-  } else if (theDate.includes('-')) {
-    separator = '-';
+  let separator = "";
+  if (theDate.includes("/")) {
+    separator = "/";
+  } else if (theDate.includes("-")) {
+    separator = "-";
   } else {
     // console.log(new Date(theDate));
     return new Date(theDate);

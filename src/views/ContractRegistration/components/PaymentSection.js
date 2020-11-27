@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Button, Switch } from "antd";
-import { Elements, CardElement } from "@stripe/react-stripe-js";
+import { Button, Switch, Modal } from "antd";
+import {
+  Elements,
+  CardElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useParams } from "react-router-dom";
 
 import { Content, SwitchContainer, SpaceBetween, CardHeader } from "./styles";
 import { requests, getUrl } from "../../../globals/requests";
 import "../CardSectionStyles.css";
-
-const key = "pk_test_QfwYWKP5W0f6T8uV7pNxriaG00TSUqqY2p";
+import { helpers } from "../../../utils";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -28,25 +32,50 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-function PaymentSection() {
+function PaymentSection(props) {
   const [payViaCheck, setPayViaCheck] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loadingSubmitBtn, setLoadingSubmitBtn] = useState(false);
 
-  const { orgId } = useParams();
-
-  useEffect(() => {
-    alert(orgId);
-  }, []);
-
-  function handlePayment() {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }
+  const { contract } = props;
 
   function onChange(checked) {
     setPayViaCheck(checked);
+  }
+
+  const stripe = useStripe();
+  const elements = useElements();
+
+  function paymentSuccess() {
+    Modal.success({
+      content: "Your payment was succesful...",
+    });
+  }
+
+  async function activateContract() {
+    try {
+      setLoadingSubmitBtn(true);
+      const card = elements.getElement(CardElement);
+      const result = await stripe.createToken(card);
+      if (result.error) {
+        // Inform the user if there was an error.
+        console.log(result.error.message);
+        return;
+      } else {
+        console.log(result.token.card);
+        // Send the token to your server.
+        // stripeTokenHandler(result.token);
+      }
+      const url = `${getUrl("contracts")}/${contract._id}/active`;
+      const response = await requests.put(url);
+      console.log(response.data);
+      setLoadingSubmitBtn(false);
+      //   setContract(response.data);
+      paymentSuccess();
+    } catch (e) {
+      console.log(e);
+      //setLoadingSubmitBtn(false);
+      helpers.displayMessage(e);
+    }
   }
 
   return (
@@ -58,20 +87,30 @@ function PaymentSection() {
 
       {payViaCheck ? (
         <p>
-          Mail the check addressed to lorem ipsum dolor ichtecj semen toliso
+          Mail the check addressed to Lorem Ipsum Dolor Ichtecj Semen toliso
           paremi lorem ipsum dolor.
         </p>
       ) : (
         <>
           <CardHeader>Enter Card Details</CardHeader>
-          <SpaceBetween>
-            <Elements stripe={loadStripe(key)}>
+          <CardHeader>
+            {contract.amount &&
+              "Amount: " +
+                helpers.toCurrency(contract.amount, contract.currency)}
+          </CardHeader>
+          {contract.amount && (
+            <SpaceBetween>
               <CardElement options={CARD_ELEMENT_OPTIONS} />
-            </Elements>
-            <Button loading={loading} type="primary" onClick={handlePayment}>
-              Submit Payment
-            </Button>
-          </SpaceBetween>
+
+              <Button
+                loading={loadingSubmitBtn}
+                type="primary"
+                onClick={activateContract}
+              >
+                Pay {helpers.toCurrency(contract.amount, contract.currency)}
+              </Button>
+            </SpaceBetween>
+          )}
         </>
       )}
     </Content>

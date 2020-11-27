@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Input, Button, Form } from "antd";
+
 import { Content, SpaceBetween, ButtonContainer } from "./styles";
+import { dateUtil, helpers } from "../../../utils";
 
 function InfoSection(props) {
-  // const { handleNext } = props;
+  const { contract } = props;
   function handleNext() {
     props.nextStep();
   }
+  console.log(contract);
+
   return (
     <Content>
+      <p>{contract.organisation?.name}</p>
       <Form
         layout="vertical"
         initialValues={{
@@ -35,11 +40,15 @@ function InfoSection(props) {
         </SpaceBetween>
         <SpaceBetween>
           <p>Start Date</p>
-          <p>2nd January 2015</p>
+          <p>{dateUtil.formatDate(contract.startDate)}</p>
         </SpaceBetween>
         <SpaceBetween>
           <p>End Date</p>
-          <p>2nd January 2017</p>
+          <p>{dateUtil.formatDate(contract.endDate)}</p>
+        </SpaceBetween>
+        <SpaceBetween>
+          <p>Amount</p>
+          <p>{helpers.toCurrency(contract.amount, contract.currency)}</p>
         </SpaceBetween>
       </Form>
       <ButtonContainer>
