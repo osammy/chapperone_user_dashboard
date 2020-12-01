@@ -16,7 +16,7 @@ function SidebarHeader() {
             alt="logo"
           />
         </div>
-        <img src={logoText} alt="logo" />
+        {/* <img src={logoText} alt="logo" /> */}
       </div>
     </div>
   );

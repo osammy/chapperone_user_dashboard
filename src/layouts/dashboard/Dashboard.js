@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
+import { Menu } from "antd";
 import { sideBarMenuItemsList } from "../";
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 
 import Sidebar from "react-sidebar";
 import SidebarMenu from "../components/SidebarMenu/SidebarMenu";
@@ -9,7 +15,9 @@ import ContentHeader from "../components/ContentHeader/ContentHeader";
 
 import dashboardRoutes from "../../routes/dashboard";
 import Header from "../../globals/components/Header";
+//
 
+//
 const sidebarStyle = {
   //   background: "linear-gradient(to right, rgba(5,29,57,1), rgba(30,52,77,1))",
   background: "white",

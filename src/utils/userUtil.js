@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode";
 
 import { keys } from "../constants";
 
-export const getUserFromLocalStorage = () => {
+const getUserFromLocalStorage = () => {
   const token = window.localStorage.getItem(keys.TOKEN_KEY);
   if (!token) {
     throw new Error("Credential is not found");
@@ -12,11 +12,23 @@ export const getUserFromLocalStorage = () => {
   return user;
 };
 
-export const setUserRegStatusInLocalStorage = (status) => {
+const getLatestContract = () => {
+  const contract = window.localStorage.getItem(keys.CONTRACT_KEY);
+  if (!contract) {
+    throw new Error("Latest Contract is not found");
+  }
+  return JSON.parse(contract);
+};
+
+const setLatestContract = (contract) => {
+  window.localStorage.setItem(keys.CONTRACT_KEY, JSON.stringify(contract));
+};
+
+const setUserRegStatusInLocalStorage = (status) => {
   return window.localStorage.setItem(keys.HAS_REGISTERED_KEY, status);
 };
 
-export const generateRandomStrings = (n) => {
+const generateRandomStrings = (n) => {
   let text = "";
   const possible =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -53,4 +65,7 @@ export default {
   getUserToken,
   setUserToken,
   removeUserToken,
+  getLatestContract,
+  setUserRegStatusInLocalStorage,
+  setLatestContract,
 };

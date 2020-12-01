@@ -24,6 +24,7 @@ export const getLatestContract = (organisationId) => {
         type: SET_LATEST_CONTRACT,
         payload: response.data,
       });
+
       // dispatch({
       //   type: LOADING_CARDS,
       //   payload: false,

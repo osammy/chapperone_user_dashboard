@@ -9,6 +9,8 @@ function getUserToken() {
   if (!token) {
     new Error("Credentials not found");
   }
+
+  return token;
 }
 
 const getWithAuth = async (url, params) => {

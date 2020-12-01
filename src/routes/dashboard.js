@@ -1,6 +1,8 @@
 // import asyncComponent from '../Components/AsyncComponent';
 import Login from "../views/Login/Login";
 import Contracts from "../views/contracts/Contracts";
+import StaffManagement from "../views/Staff/StaffManagement";
+import MyContract from "../views/MyContract/MyContract";
 
 // //async
 // const asyncUsers = asyncComponent(()=> {import('../Views/Users/Users')});
@@ -37,17 +39,23 @@ const dashboardRoutes = [
   },
   {
     path: "/dashboard/contracts",
-    name: "Staff Management",
+    name: "Contract Management",
     icon: "pe-7s-graph",
     exact: false,
     component: Contracts,
   },
   {
-    path: "/dashboard/organisations",
+    path: "/dashboard/staffs",
     name: "Staff Management",
     icon: "pe-7s-graph",
     exact: false,
-    component: Contracts,
+    component: StaffManagement,
+  },
+  {
+    path: "/dashboard/mycontract",
+    name: "My Contract",
+    exact: false,
+    component: MyContract,
   },
 
   // { redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }

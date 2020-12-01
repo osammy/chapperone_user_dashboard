@@ -11,6 +11,7 @@ import logo from "../../assets/logos/icon_only_small-removebg.png";
 import "./index.css";
 import helpers from "../../utils/helpers";
 import { getLatestContract } from "../../state/actions/contractActions";
+import { getUserOrganisation } from "../../state/actions/organisationActions";
 
 const FormItem = Form.Item;
 
@@ -31,7 +32,9 @@ function Login(props) {
       const token = response.data;
       await userUtil.setUserToken(token);
       const payload = jwt_decode(token);
-      await props.getLatestContract(payload.organisation);
+      const contract = await props.getLatestContract(payload.organisation);
+      await props.getUserOrganisation(payload._id);
+      userUtil.setLatestContract(contract);
       setLoading(false);
       history.push("/dashboard");
     } catch (e) {
@@ -98,4 +101,4 @@ Login.propTypes = {
   // loading: PropTypes.object,
 };
 
-export default connect(null, { getLatestContract })(Login);
+export default connect(null, { getLatestContract, getUserOrganisation })(Login);

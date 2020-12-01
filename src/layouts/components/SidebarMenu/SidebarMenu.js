@@ -123,6 +123,7 @@ class SidebarMenu extends Component {
                   <div>
                     <Icon
                       style={{
+                        fontSize: "20px",
                         color:
                           key === this.state.key
                             ? "rgb(37, 147, 252)"

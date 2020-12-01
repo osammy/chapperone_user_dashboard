@@ -107,7 +107,6 @@ class SideMenu extends React.Component {
             : expandedLogo && (
                 <img src={expandedLogo} alt="logo" className="side-menu-logo" />
               )}
-
           <Menu
             style={{ background: "rgb(2, 34, 63)" }}
             theme="dark"
@@ -117,7 +116,7 @@ class SideMenu extends React.Component {
             {this.renderMenuItems()}
           </Menu>
         </Sider>
-        <div style={{ border: "1px solid red", width: "100%" }}>
+        <div>
           <Switch>
             {dashboardRoutes.map((prop, key) => {
               return (

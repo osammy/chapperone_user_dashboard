@@ -18,6 +18,9 @@ code {
   --primary: rgb(37, 147, 252);
   --illustration: rgb(240, 242, 245);
   --verticalMargin: 20px;
+  --space: 20px;
+  --smallSpace: 10px;
+  --tinySpace: 5px;
 }
 
 .space-between {

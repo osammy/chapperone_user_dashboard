@@ -4,8 +4,8 @@ import {
   SettingOutlined,
   UsergroupDeleteOutlined,
   ReconciliationOutlined,
+  ContainerOutlined,
 } from "@ant-design/icons";
-
 export const sideBarMenuItemsList = [
   {
     path: "",
@@ -35,7 +35,7 @@ export const sideBarMenuItemsList = [
     subItems: [],
   },
   {
-    path: "/dashboard/staff",
+    path: "/dashboard/staffs",
     name: "Staff Management",
     icon: UsergroupDeleteOutlined,
     protected: true,
@@ -45,6 +45,13 @@ export const sideBarMenuItemsList = [
     path: "/dashboard/contracts",
     name: "Contract Management",
     icon: ReconciliationOutlined,
+    protected: true,
+    subItems: [],
+  },
+  {
+    path: "/dashboard/mycontract",
+    name: "MY Contract",
+    icon: ContainerOutlined,
     protected: true,
     subItems: [],
   },

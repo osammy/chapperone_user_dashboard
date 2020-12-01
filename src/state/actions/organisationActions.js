@@ -9,30 +9,23 @@ export const setOrganisation = (org) => {
   };
 };
 
-export const getCards = (userId, params) => {
+export const getUserOrganisation = (userId) => {
   return async (dispatch) => {
     try {
-      // dispatch({
-      //   type: LOADING_CARDS,
-      //   payload: true,
-      // });
-      const url = `${getUrl("organisations")}`;
-      const response = await requests.getWithAuth(url, params);
+      const url = `${getUrl("organisations")}/query`;
+      const query = {
+        "admins.userId": userId,
+      };
+      console.log(url);
+      const response = await requests.getWithAuth(url, query);
 
-      // dispatch({
-      //   type: GET_CARDS,
-      //   payload: response.data,
-      // });
-      // dispatch({
-      //   type: LOADING_CARDS,
-      //   payload: false,
-      // });
+      dispatch({
+        type: SET_ORGANISATION,
+        payload: response.data,
+      });
+
       return response.data;
     } catch (e) {
-      // dispatch({
-      //   type: LOADING_CARDS,
-      //   payload: false,
-      // });
       throw e;
     }
   };
