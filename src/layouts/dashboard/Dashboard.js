@@ -1,23 +1,14 @@
 import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
-import { Menu } from "antd";
-import { sideBarMenuItemsList } from "../";
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-
 import Sidebar from "react-sidebar";
+
 import SidebarMenu from "../components/SidebarMenu/SidebarMenu";
 import SidebarHeader from "../components/SidebarHeader/SidebarHeader";
 import ContentHeader from "../components/ContentHeader/ContentHeader";
-
+import { sideBarMenuItemsList } from "../";
 import dashboardRoutes from "../../routes/dashboard";
-import Header from "../../globals/components/Header";
-//
+import { userUtil } from "../../utils";
 
-//
 const sidebarStyle = {
   //   background: "linear-gradient(to right, rgba(5,29,57,1), rgba(30,52,77,1))",
   background: "white",
@@ -49,10 +40,14 @@ class DashboardLayout extends Component {
       sidebarOpen: false,
       mql,
       open: false,
+      organisation: {},
     };
   }
   componentDidMount() {
     mql.addListener(this.mediaQueryChanged);
+    const org = userUtil.getOrganisation();
+    console.log(org);
+    this.setState({ org });
   }
   componentWillUnmount() {
     this.state.mql.removeListener(this.mediaQueryChanged);
@@ -79,11 +74,17 @@ class DashboardLayout extends Component {
     });
   };
 
+  getOrg() {
+    return userUtil.getOrganisation();
+  }
+
+  organisation = userUtil.getOrganisation();
+
   render() {
     return (
       <div>
         <div className="dsh-sidebarTop">
-          <SidebarHeader title="Dashboard" />
+          <SidebarHeader organisation={this.organisation} title="Dashboard" />
           <ContentHeader title="Dashboard" />
         </div>
         <Sidebar
@@ -100,13 +101,7 @@ class DashboardLayout extends Component {
           onSetOpen={this.onSetSidebarOpen}
           styles={{ sidebar: sidebarStyle, content: contentStyle }}
         >
-          {/* <div
-            style={{ backgroundColor: "rga(240, 242, 245)" }}
-            className="dsh-content"
-          > */}
           <>
-            {/* <ContentHeader title="Dashboard" /> */}
-
             <Switch>
               {dashboardRoutes.map((prop, key) => {
                 return (
@@ -120,7 +115,6 @@ class DashboardLayout extends Component {
               })}
             </Switch>
           </>
-          {/* </div> */}
         </Sidebar>
       </div>
     );

@@ -1,3 +1,8 @@
+.cmpt-container {
+    margin-top: var(--space)
+}
+
+
 .sb-input {
     border:none;
     width:350px;

@@ -58,7 +58,8 @@ function StaffList(props) {
       setSelected(
         selectedRows.map((el) => ({
           _id: el._id,
-          organisation: el.organisation,
+          admin: el.admin,
+          // organisation: el.organisation,
         }))
       );
     },
@@ -67,12 +68,13 @@ function StaffList(props) {
       name: record.name,
     }),
   };
+
   return (
     <Container>
       <TableButtonsContainer>
         {selected.length !== 0 && (
           <FlexEnd>
-            {selected[0].admin ? (
+            {selected[0].admin === "Yes" ? (
               <Button
                 shape="round"
                 onClick={() => removeAdmin(selected[0]?._id)}
@@ -102,7 +104,7 @@ function StaffList(props) {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={staffs}
+          dataSource={staffs.filter((el) => el.verified)}
         />
       </TableContainer>
     </Container>

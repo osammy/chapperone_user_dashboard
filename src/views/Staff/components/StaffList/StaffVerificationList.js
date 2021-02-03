@@ -13,7 +13,7 @@ import {
 } from "./styles";
 
 function StaffList(props) {
-  const { staffs } = props;
+  const { staffs, verifyStaffs } = props;
   const [selectionType, setSelectionType] = useState("checkbox");
   const [selected, setSelected] = useState([]);
 
@@ -45,36 +45,6 @@ function StaffList(props) {
     //   render: (text) => (selected ? <a>Remove Selected</a> : null),
     // },
   ];
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-    },
-    {
-      key: "4",
-      name: "Disabled User",
-      age: 99,
-      address: "Sidney No. 1 Lake Park",
-    },
-  ];
-
-  //   function verifyStaffs(users) {
-  //     getUrl
-  //   }
 
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
@@ -95,15 +65,14 @@ function StaffList(props) {
       name: record.name,
     }),
   };
+
   return (
     <Container>
-      {/* {props.staffs.map(() => (
-        <Staff />
-      ))} */}
       <TableButtonsContainer>
         {selected.length !== 0 && (
           <FlexEnd>
             <Button
+              onClick={() => verifyStaffs(selected)}
               shape="round"
               icon={<CheckOutlined />}
               containermargin="0 10px"
@@ -126,7 +95,7 @@ function StaffList(props) {
             ...rowSelection,
           }}
           columns={columns}
-          dataSource={staffs}
+          dataSource={staffs.filter((el) => el.verified === false)} // return only sfaff with `verified: false`
         />
       </TableContainer>
     </Container>

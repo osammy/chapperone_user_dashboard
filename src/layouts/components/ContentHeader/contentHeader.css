@@ -25,6 +25,12 @@
     /* transition: 0.3s; */
 }
 
+.lch-leftTextContainer {
+    text-transform: capitalize;
+    font-weight: 500;
+    /* transition: 0.3s; */
+}
+
 .lch-leftIconContainer:hover {
     background-color: #eee;
 }
@@ -47,7 +53,11 @@
     display: flex;
     justify-content: flex-end;
     z-index: 1;
+}
 
+.lch-left {
+    display: flex;
+    justify-content: space-between;
 }
 
 .lch-contract-header {

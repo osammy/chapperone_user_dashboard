@@ -4,7 +4,9 @@ import logoText from "../../../assets/logos/Chapperone-font-v1.jpg";
 import logo from "../../../assets/logos/icon_only_small.png";
 import "./sidebarHeader.css";
 
-function SidebarHeader() {
+function SidebarHeader(props) {
+  const { organisation } = props;
+
   return (
     <div className="sbh-container">
       <div className="sbh-content">
@@ -15,6 +17,7 @@ function SidebarHeader() {
             src={logo}
             alt="logo"
           />
+          <p className="sbh-bottomText">{organisation.name}</p>
         </div>
         {/* <img src={logoText} alt="logo" /> */}
       </div>

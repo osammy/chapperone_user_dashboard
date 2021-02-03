@@ -16,8 +16,34 @@ export const getUserOrganisation = (userId) => {
       const query = {
         "admins.userId": userId,
       };
-      console.log(url);
+
       const response = await requests.getWithAuth(url, query);
+      console.log(query);
+
+      console.log("response.data === ");
+      console.log(response.data);
+
+      dispatch({
+        type: SET_ORGANISATION,
+        payload: response.data,
+      });
+
+      return response.data;
+    } catch (e) {
+      throw e;
+    }
+  };
+};
+
+export const getUserOrganisationById = (id) => {
+  return async (dispatch) => {
+    try {
+      const url = `${getUrl("organisations")}/${id}`;
+
+      const response = await requests.getWithAuth(url);
+
+      console.log("response.data === ");
+      console.log(response.data);
 
       dispatch({
         type: SET_ORGANISATION,

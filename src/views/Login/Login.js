@@ -11,7 +11,10 @@ import logo from "../../assets/logos/icon_only_small-removebg.png";
 import "./index.css";
 import helpers from "../../utils/helpers";
 import { getLatestContract } from "../../state/actions/contractActions";
-import { getUserOrganisation } from "../../state/actions/organisationActions";
+import {
+  getUserOrganisation,
+  getUserOrganisationById,
+} from "../../state/actions/organisationActions";
 
 const FormItem = Form.Item;
 
@@ -32,8 +35,13 @@ function Login(props) {
       const token = response.data;
       await userUtil.setUserToken(token);
       const payload = jwt_decode(token);
+      console.log(payload);
       const contract = await props.getLatestContract(payload.organisation);
-      await props.getUserOrganisation(payload._id);
+      const organisation = await props.getUserOrganisationById(
+        payload.organisation
+      );
+      console.log(organisation);
+      userUtil.setOrganisation(organisation);
       userUtil.setLatestContract(contract);
       setLoading(false);
       history.push("/dashboard");
@@ -82,12 +90,12 @@ function Login(props) {
               loading={loading}
               // loading={loading.effects.login}
             >
-              Sign in
+              Sign In
             </Button>
-            <p>
+            {/* <p>
               <span className="margin-right">Username ：guest</span>
               <span>Password ：guest</span>
-            </p>
+            </p> */}
           </Row>
         </Form>
       </div>
@@ -101,4 +109,8 @@ Login.propTypes = {
   // loading: PropTypes.object,
 };
 
-export default connect(null, { getLatestContract, getUserOrganisation })(Login);
+export default connect(null, {
+  getLatestContract,
+  getUserOrganisation,
+  getUserOrganisationById,
+})(Login);

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { IoIosArrowDown } from "react-icons/io";
-// import OrderboxIcon from "../Images/orderbox_white.png";
-import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
+import Item from "./Item";
+import SubMenu from "./SubMenu";
+import { sideBarMenuItemsList } from "../../";
 import "./index.css";
 
 class SidebarMenu extends Component {
@@ -31,121 +33,43 @@ class SidebarMenu extends Component {
 
     return { backgroundColor: "white", border: "none" };
   };
+
+  componentDidMount() {
+    console.log(this.props.history.location.pathname);
+    console.log(sideBarMenuItemsList);
+    const index = sideBarMenuItemsList.findIndex(
+      (el) => el.path === this.props.history.location.pathname
+    );
+    this.setState({ key: index });
+  }
   render() {
     const { items } = this.props;
-    const { open, key } = this.state;
+    const { open } = this.state;
 
     return (
-      <div>
+      <div className="cmpt-container">
         <ul className="cmpt-ul">
           {items.map((prop, key) => {
-            let Icon = prop.icon;
-            let iconClass = open[key]
-              ? "cmpt-selected-list-open"
-              : "cmpt-selected-list-close";
-            let subLinkClass = open[key]
-              ? "cmpt-sub-sidebar-menu-item py-1"
-              : "cmpt-display-none";
             if (prop.subItems.length !== 0)
               return (
-                <div key={key}>
-                  <li
-                    onClick={() => {
-                      this.handleOpen(key);
-                    }}
-                    key={key}
-                    style={{ cursor: "auto" }}
-                    className="pl-4 cmpt-sidebar-menu-item  space-item"
-                  >
-                    <div>
-                      <Icon style={{ color: "#6a737d" }} />
-                      &nbsp;
-                      <span className="small cmpt-off-white">
-                        <b>{prop.name.toUpperCase()}</b>
-                      </span>
-                    </div>
-                    <div>
-                      {prop.subItems.length !== 0 && (
-                        <IoIosArrowDown
-                          style={{ color: "#6a737d" }}
-                          className={iconClass}
-                        />
-                      )}
-                    </div>
-                  </li>
-                  {prop.subItems.map((dprop, dkey) => {
-                    let SubIcon = dprop.icon;
-                    return (
-                      <li
-                        style={{ fontSize: "0.9em" }}
-                        key={dkey}
-                        className={subLinkClass}
-                      >
-                        <NavLink
-                          activeStyle={{
-                            color: "#8fc348",
-                            background: "black",
-                          }}
-                          style={{ textDecoration: "none" }}
-                          className="color-white cmpt-links"
-                          to={dprop.path}
-                        >
-                          <SubIcon
-                            style={{ color: "#6a737d", fontSize: "0.95em" }}
-                          />
-                          &nbsp;&nbsp;
-                          <span className="small menu-item-span">
-                            {dprop.name.toUpperCase()}
-                          </span>
-                        </NavLink>
-                      </li>
-                    );
-                  })}
-                </div>
+                <SubMenu
+                  {...prop}
+                  key={key}
+                  open={open}
+                  index={key}
+                  handleOpen={() => this.handleOpen(key)}
+                />
               );
 
             return (
-              <li
+              <Item
+                {...prop}
                 key={key}
-                onClick={() => this.handleSelected(key)}
-                style={this.listStyle(key)}
-                className="pl-4 cmpt-sidebar-menu-item"
-              >
-                <NavLink
-                  // activeStyle={{ color: "#8fc348", background: "black" }}
-                  style={{
-                    textDecoration: "none",
-                  }}
-                  activeClassName="selected"
-                  className="color-white cmpt-links"
-                  to={prop.path}
-                >
-                  <div>
-                    <Icon
-                      style={{
-                        fontSize: "20px",
-                        color:
-                          key === this.state.key
-                            ? "rgb(37, 147, 252)"
-                            : "rgb(103,103,103)",
-                      }}
-                    />
-                    &nbsp;
-                    <span
-                      style={{
-                        color:
-                          key === this.state.key
-                            ? "rgb(37, 147, 252)"
-                            : "rgb(103,103,103)",
-                      }}
-                      className="small menu-item-span"
-                    >
-                      {prop.name.toUpperCase()}
-                    </span>
-                  </div>
-                </NavLink>
-                {/*<div>{(prop.sub.length !== 0) && <IoIosArrowDown style={{color:"#6a737d"}} />}</div>*/}
-              </li>
+                keyState={this.state.key}
+                listStyle={this.listStyle(key)}
+                handleSelected={() => this.handleSelected(key)}
+                index={key}
+              />
             );
           })}
         </ul>
@@ -154,4 +78,4 @@ class SidebarMenu extends Component {
   }
 }
 
-export default SidebarMenu;
+export default withRouter(SidebarMenu);

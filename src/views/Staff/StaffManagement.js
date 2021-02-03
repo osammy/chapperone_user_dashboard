@@ -12,13 +12,11 @@ function StaffManagement(props) {
   const [staffs, setStaffs] = useState([]);
   const admins = props.organisation?.admins || [];
   useEffect(() => {
-    console.log(props.organisation);
+    console.log(admins);
     function isAdmin(id) {
       let userIsAdmin = false;
       try {
         userIsAdmin = admins.find((el) => {
-          alert("hey");
-
           return id === el.userId;
         });
       } catch (e) {}
@@ -33,19 +31,20 @@ function StaffManagement(props) {
         }`;
         const params = {
           role: "teacher",
+          organisation: user.organisation,
         };
         const response = await requests.getWithAuth(url, params);
         const data = response.data;
-        // Add keys to data, just because of ant design Table dispoay component
-        const orgStaffs = data.map((el, index) => {
-          return {
-            key: `${index}`,
-            ...el,
-            created_at: dateUtil.formatDate(el.created_at),
-            admin: isAdmin(el._id),
-          };
-        });
-        setStaffs(orgStaffs);
+        // // Add keys to data, just because of ant design Table dispoay component
+        // const orgStaffs = data.map((el, index) => {
+        //   return {
+        //     key: `${index}`,
+        //     ...el,
+        //     created_at: dateUtil.formatDate(el.created_at),
+        //     admin: isAdmin(el._id),
+        //   };
+        // });
+        setStaffs(data);
       } catch (e) {
         helpers.displayMessage(e);
       }
@@ -65,9 +64,16 @@ function StaffManagement(props) {
     try {
       const url = `${getUrl("users")}/admins/verifyStaffs`;
 
-      const users = await requests.putWithAuth(url, { staffs: selectedStaffs });
+      await requests.putWithAuth(url, { staffs: selectedStaffs });
+      const cOfStaffs = [...staffs];
+      selectedStaffs.forEach((selectedStaff) => {
+        const indx = cOfStaffs.findIndex((el) => el._id === selectedStaff._id);
+        if (indx !== -1) {
+          cOfStaffs[indx].verified = true;
+        }
+      });
 
-      console.log(users.data);
+      setStaffs(cOfStaffs);
     } catch (e) {
       helpers.displayMessage(e);
     }
@@ -77,9 +83,15 @@ function StaffManagement(props) {
     try {
       const user = userUtil.getUserFromLocalStorage();
       const url = `${getUrl("organisations")}/${user.organisation}/addAdmin`;
-      const response = await requests.putWithAuth(url, { userId });
-
-      console.log(response.data);
+      await requests.putWithAuth(url, { userId });
+      const index = staffs.findIndex((staff) => staff._id === userId);
+      if (index !== -1) {
+        const cOfStaffs = [...staffs];
+        const theStaff = cOfStaffs[index];
+        theStaff.admin = "Yes";
+        cOfStaffs[index] = theStaff;
+        setStaffs(cOfStaffs);
+      }
     } catch (e) {
       helpers.displayMessage(e);
     }
@@ -89,7 +101,15 @@ function StaffManagement(props) {
     try {
       const user = userUtil.getUserFromLocalStorage();
       const url = `${getUrl("organisations")}/${user.organisation}/removeAdmin`;
-      const response = await requests.putWithAuth(url, { userId });
+      await requests.putWithAuth(url, { userId });
+      const index = staffs.findIndex((staff) => staff._id === userId);
+      if (index !== -1) {
+        const cOfStaffs = [...staffs];
+        const theStaff = cOfStaffs[index];
+        theStaff.admin = "No";
+        cOfStaffs[index] = theStaff;
+        setStaffs(cOfStaffs);
+      }
     } catch (e) {
       helpers.displayMessage(e);
     }

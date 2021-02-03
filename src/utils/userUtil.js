@@ -23,6 +23,16 @@ const getLatestContract = () => {
 const setLatestContract = (contract) => {
   window.localStorage.setItem(keys.CONTRACT_KEY, JSON.stringify(contract));
 };
+const setOrganisation = (organisation) => {
+  window.localStorage.setItem(keys.ORG_KEY, JSON.stringify(organisation));
+};
+const getOrganisation = () => {
+  const organisation = window.localStorage.getItem(keys.ORG_KEY);
+  if (!organisation) {
+    throw new Error("Error occured on org found");
+  }
+  return JSON.parse(organisation);
+};
 
 const setUserRegStatusInLocalStorage = (status) => {
   return window.localStorage.setItem(keys.HAS_REGISTERED_KEY, status);
@@ -68,4 +78,6 @@ export default {
   getLatestContract,
   setUserRegStatusInLocalStorage,
   setLatestContract,
+  getOrganisation,
+  setOrganisation,
 };

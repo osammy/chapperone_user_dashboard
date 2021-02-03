@@ -3,6 +3,7 @@ import Login from "../views/Login/Login";
 import Contracts from "../views/contracts/Contracts";
 import StaffManagement from "../views/Staff/StaffManagement";
 import MyContract from "../views/MyContract/MyContract";
+import Overview from "../views/Overview/Overview";
 
 // //async
 // const asyncUsers = asyncComponent(()=> {import('../Views/Users/Users')});
@@ -56,6 +57,12 @@ const dashboardRoutes = [
     name: "My Contract",
     exact: false,
     component: MyContract,
+  },
+  {
+    path: "/dashboard",
+    name: "Overview",
+    exact: true,
+    component: Overview,
   },
 
   // { redirect: true, path: "/", to: "/dashboard", name: "Dashboard" }

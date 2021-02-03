@@ -3,34 +3,14 @@ import {
   AppstoreOutlined,
   SettingOutlined,
   UsergroupDeleteOutlined,
-  ReconciliationOutlined,
+  DashboardOutlined,
   ContainerOutlined,
 } from "@ant-design/icons";
 export const sideBarMenuItemsList = [
   {
-    path: "",
-    name: "Staffs",
-    icon: AppstoreOutlined,
-    protected: true,
-    subItems: [
-      {
-        path: "/dashboard/verified",
-        name: "Verified",
-        icon: AppstoreOutlined,
-        protected: true,
-      },
-      {
-        path: "/dashboard/register",
-        name: "Register",
-        icon: AppstoreOutlined,
-        protected: true,
-      },
-    ],
-  },
-  {
-    path: "/dashboard/users",
-    name: "Users",
-    icon: AppstoreOutlined,
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: DashboardOutlined,
     protected: true,
     subItems: [],
   },
@@ -41,13 +21,13 @@ export const sideBarMenuItemsList = [
     protected: true,
     subItems: [],
   },
-  {
-    path: "/dashboard/contracts",
-    name: "Contract Management",
-    icon: ReconciliationOutlined,
-    protected: true,
-    subItems: [],
-  },
+  // {
+  //   path: "/dashboard/contracts",
+  //   name: "Contract Management",
+  //   icon: ReconciliationOutlined,
+  //   protected: true,
+  //   subItems: [],
+  // },
   {
     path: "/dashboard/mycontract",
     name: "MY Contract",

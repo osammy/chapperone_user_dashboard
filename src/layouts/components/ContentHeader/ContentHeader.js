@@ -19,7 +19,9 @@ const { SubMenu } = Menu;
 function ContentHeader(props) {
   const history = useHistory();
   const renderAvatar = () => {
-    return <img className="lch-avatarImg" src={avatar} alt="avatar" />;
+    const user = userUtil.getUserFromLocalStorage();
+
+    return <img className="lch-avatarImg" src={user.avatar} alt="avatar" />;
   };
 
   const logout = () => {
@@ -28,15 +30,15 @@ function ContentHeader(props) {
   };
 
   const latestCotract = userUtil.getLatestContract();
+  const user = userUtil.getUserFromLocalStorage();
 
   const renderTopMenu = () => {
     return (
-      <Menu onClick={() => alert("hey")} style={{ width: 95 }} mode="vertical">
+      <Menu style={{ width: 95 }} mode="vertical">
         <SubMenu key="sub1" icon={renderAvatar()} title="">
           <Menu.Item onClick={logout} key="1">
             Logout
           </Menu.Item>
-          <Menu.Item key="2">Option 2</Menu.Item>
         </SubMenu>
       </Menu>
     );
@@ -57,8 +59,14 @@ function ContentHeader(props) {
     <div className="lch-container">
       <div className="lch-content">
         <div className="lch-leftIconContainer">
-          <MenuFoldOutlined className="lch-leftIconContainer-icon" />
+          <div className="lch-left">
+            <MenuFoldOutlined className="lch-leftIconContainer-icon" />
+            <div className="lch-leftTextContainer">
+              Welcome, {`${user.first_name} ${user.last_name}`}
+            </div>
+          </div>
         </div>
+
         <div className="lch-headerEnd">
           <div></div>
           {renderContract()}

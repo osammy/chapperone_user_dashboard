@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Switch, Modal } from "antd";
+import CreditCardInput from "react-credit-card-input";
+
 import {
   Elements,
   CardElement,
@@ -32,6 +34,10 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
+const cardNumber = "";
+const expiry = "";
+const cvc = "";
+
 function PaymentSection(props) {
   const [payViaCheck, setPayViaCheck] = useState(false);
   const [loadingSubmitBtn, setLoadingSubmitBtn] = useState(false);
@@ -51,29 +57,47 @@ function PaymentSection(props) {
     });
   }
 
+  function showError(message) {
+    Modal.success({
+      content: message || "Unknown error occured",
+    });
+  }
+
   async function activateContract() {
     try {
       setLoadingSubmitBtn(true);
       const card = elements.getElement(CardElement);
+
       const result = await stripe.createToken(card);
+      console.log(result);
+
       if (result.error) {
         // Inform the user if there was an error.
         console.log(result.error.message);
+        showError(result.error.message);
         return;
-      } else {
-        console.log(result.token.card);
-        // Send the token to your server.
-        // stripeTokenHandler(result.token);
       }
+      const { id, brand, exp_month, exp_year, last4 } = result.token.card;
+      const cardDetails = {
+        id,
+        brand,
+        exp_month,
+        exp_year,
+        last4,
+        tokenId: result.token.id,
+      };
+      // Send the token to your server.
+      // stripeTokenHandler(result.token);
+
       const url = `${getUrl("contracts")}/${contract._id}/active`;
-      const response = await requests.put(url);
+      const response = await requests.put(url, cardDetails);
       console.log(response.data);
       setLoadingSubmitBtn(false);
       //   setContract(response.data);
       paymentSuccess();
     } catch (e) {
       console.log(e);
-      //setLoadingSubmitBtn(false);
+      setLoadingSubmitBtn(false);
       helpers.displayMessage(e);
     }
   }
@@ -99,17 +123,28 @@ function PaymentSection(props) {
                 helpers.toCurrency(contract.amount, contract.currency)}
           </CardHeader>
           {contract.amount && (
-            <SpaceBetween>
-              <CardElement options={CARD_ELEMENT_OPTIONS} />
+            <>
+              <SpaceBetween>
+                <CardElement options={CARD_ELEMENT_OPTIONS} />
 
-              <Button
-                loading={loadingSubmitBtn}
-                type="primary"
-                onClick={activateContract}
-              >
-                Pay {helpers.toCurrency(contract.amount, contract.currency)}
-              </Button>
-            </SpaceBetween>
+                <Button
+                  loading={loadingSubmitBtn}
+                  type="primary"
+                  onClick={activateContract}
+                >
+                  Pay {helpers.toCurrency(contract.amount, contract.currency)}
+                </Button>
+              </SpaceBetween>
+              {/* <CreditCardInput
+                cardNumberInputProps={{
+                  value: cardNumber,
+                  onChange: () => null,
+                }}
+                cardExpiryInputProps={{ value: expiry, onChange: () => null }}
+                cardCVCInputProps={{ value: cvc, onChange: () => null }}
+                fieldClassName="input"
+              /> */}
+            </>
           )}
         </>
       )}

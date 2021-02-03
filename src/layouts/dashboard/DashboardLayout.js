@@ -2,11 +2,11 @@ import React from "react";
 import "./index.css";
 import { Menu, Layout } from "antd";
 import { Switch, Route } from "react-router-dom";
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+// import {
+//   MailOutlined,
+//   AppstoreOutlined,
+//   SettingOutlined,
+// } from "@ant-design/icons";
 
 import { sideBarMenuItemsList } from "../";
 import dashboardRoutes from "../../routes/dashboard";
