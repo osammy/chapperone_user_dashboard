@@ -7,7 +7,7 @@ const Content = styled.div`
   justify-content: center;
   align-items: center;
   width: 650px;
-  height: 450px;
+  height: 500px;
   padding: var(--verticalMargin);
   position: relative;
 `;

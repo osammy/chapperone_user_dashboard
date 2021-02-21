@@ -1,7 +1,7 @@
 import React from "react";
-import StaffIcon from "../../../assets/images/employee.png";
-import TripIcon from "../../../assets/images/destination.png";
-import StudentIcon from "../../../assets/images/students.png";
+import StaffIcon from "../../../assets/images/resized/employee.png";
+import TripIcon from "../../../assets/images/resized/destination.png";
+import StudentIcon from "../../../assets/images/resized/students.png";
 
 function ImagIcon(props) {
   const { display } = props;
@@ -24,6 +24,7 @@ function ImagIcon(props) {
       <img
         className="ovv-imageIcon"
         width="50"
+        height="50"
         src={Icon}
         alt="Top Statistics Logo"
       />

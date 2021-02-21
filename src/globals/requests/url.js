@@ -1,5 +1,5 @@
-// const baseUrl = "http://localhost:8000/api/v1";
-const baseUrl = "https://chapperone.us-3.evennode.com/api/v1";
+const baseUrl = "http://localhost:8000/api/v1";
+// const baseUrl = "https://chapperone.us-3.evennode.com/api/v1";
 const users = `${baseUrl}/users`;
 const organisations = `${baseUrl}/organisations`;
 const contracts = `${baseUrl}/contracts`;

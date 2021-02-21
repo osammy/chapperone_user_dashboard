@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Switch, Modal } from "antd";
-import CreditCardInput from "react-credit-card-input";
+// import CreditCardInput from "react-credit-card-input";
+import { useHistory } from "react-router-dom";
 
 import {
   Elements,
@@ -41,8 +42,9 @@ const cvc = "";
 function PaymentSection(props) {
   const [payViaCheck, setPayViaCheck] = useState(false);
   const [loadingSubmitBtn, setLoadingSubmitBtn] = useState(false);
+  const history = useHistory();
 
-  const { contract } = props;
+  const { contract, adminEmail } = props;
 
   function onChange(checked) {
     setPayViaCheck(checked);
@@ -51,9 +53,14 @@ function PaymentSection(props) {
   const stripe = useStripe();
   const elements = useElements();
 
+  function proceedToLogin() {
+    history.push("/login");
+  }
+
   function paymentSuccess() {
     Modal.success({
       content: "Your payment was succesful...",
+      onOk: proceedToLogin,
     });
   }
 
@@ -75,6 +82,8 @@ function PaymentSection(props) {
         // Inform the user if there was an error.
         console.log(result.error.message);
         showError(result.error.message);
+        setLoadingSubmitBtn(false);
+
         return;
       }
       const { id, brand, exp_month, exp_year, last4 } = result.token.card;
@@ -90,7 +99,10 @@ function PaymentSection(props) {
       // stripeTokenHandler(result.token);
 
       const url = `${getUrl("contracts")}/${contract._id}/active`;
-      const response = await requests.put(url, cardDetails);
+      const response = await requests.put(url, {
+        adminEmail,
+        cardDetails,
+      });
       console.log(response.data);
       setLoadingSubmitBtn(false);
       //   setContract(response.data);
@@ -105,14 +117,15 @@ function PaymentSection(props) {
   return (
     <Content>
       <SwitchContainer>
-        <p>Pay Via Check</p>
+        <p>Pay Via Cheque</p>
         <Switch onChange={onChange} />
       </SwitchContainer>
 
       {payViaCheck ? (
         <p>
-          Mail the check addressed to Lorem Ipsum Dolor Ichtecj Semen toliso
-          paremi lorem ipsum dolor.
+          If you wish to pay via cheque, the process is slightly different.
+          Please contact Ali at ali@gochapperone.com and she will walk you
+          through the process.
         </p>
       ) : (
         <>
@@ -122,7 +135,7 @@ function PaymentSection(props) {
               "Amount: " +
                 helpers.toCurrency(contract.amount, contract.currency)}
           </CardHeader>
-          {contract.amount && (
+          {!contract.amount && (
             <>
               <SpaceBetween>
                 <CardElement options={CARD_ELEMENT_OPTIONS} />

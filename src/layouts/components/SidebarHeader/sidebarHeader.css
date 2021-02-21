@@ -10,6 +10,8 @@
     background-color: rgb(254, 254, 254);
     
     box-shadow: 0 4px 2px -2px gray;
+    padding-top: 45px;
+    padding-bottom: 25px;
 }
 .sbh-topImgContainer {
     display: flex;
@@ -35,6 +37,9 @@
 }
 
 .sbh-bottomText {
-    font-size: var(--h3);
+    font-size: var(--h4);
     text-transform: capitalize;
+    padding-left: 10px;
+    text-align: center;
+    /* width: 90%; */
 }

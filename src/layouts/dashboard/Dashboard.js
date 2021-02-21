@@ -13,7 +13,7 @@ const sidebarStyle = {
   //   background: "linear-gradient(to right, rgba(5,29,57,1), rgba(30,52,77,1))",
   background: "white",
   width: "255px",
-  top: "70px",
+  top: "100px",
   paddingLeft: "0px",
   color: "white",
   position: "absolute",

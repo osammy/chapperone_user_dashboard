@@ -55,7 +55,7 @@ function MyContract(props) {
           </SpaceBetween>
           <SpaceBetween>
             <p>Teacher Limit</p>
-            <p>10</p>
+            <p>100</p>
           </SpaceBetween>
           <Center>
             <Button title="Renew Contract" type="primary" />

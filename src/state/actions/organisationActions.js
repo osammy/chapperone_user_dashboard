@@ -42,9 +42,6 @@ export const getUserOrganisationById = (id) => {
 
       const response = await requests.getWithAuth(url);
 
-      console.log("response.data === ");
-      console.log(response.data);
-
       dispatch({
         type: SET_ORGANISATION,
         payload: response.data,
